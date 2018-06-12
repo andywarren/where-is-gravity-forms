@@ -50,23 +50,26 @@ function list_pages_with_gravity_forms() {
 		$output .= '<p style="font-size:16px;">';
 
 			// form id and title
-			$output .= '<strong>Form ID:</strong> ' . $gfFormID . '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<strong>Form Title:</strong> ' . $form['title'] . '<br/>';
-	
+			$output .=
 			// form edit url
-    		$output .= '<a href="' . site_url() . '/wp-admin/admin.php?page=gf_edit_forms&id=' . $gfFormID . '">Edit</a>&nbsp;|&nbsp;';
-	
-    		// form settings url
-    		$output .= '<a href="' . site_url() . '/wp-admin/admin.php?page=gf_edit_forms&view=settings&subview=settings&id=' . $gfFormID . '">Settings</a>&nbsp;|&nbsp;';
+				'<a href="' . site_url() . '/wp-admin/admin.php?page=gf_edit_forms&id=' . $gfFormID . '">Edit</a>' .
+				'&nbsp;|&nbsp;' .
+			// form settings url
+				'<a href="' . site_url() . '/wp-admin/admin.php?page=gf_edit_forms&view=settings&subview=settings&id=' . $gfFormID . '">Settings</a>' .
+				'&nbsp;|&nbsp;' .
+			// form entries url
+				'<a href="' . site_url() . '/wp-admin/admin.php?page=gf_entries&id=' . $gfFormID . '">Entries</a>' .
+				'&nbsp;|&nbsp;' .
+			// form title
+				'<strong>' . $form['title'] . '</strong> ' .
+			// form id
+				'(Form ID: ' . $gfFormID . ')' .
+			// close the paragraph
+				'</p>';
 
-    		// form entries url
-    		$output .= '<a href="' . site_url() . '/wp-admin/admin.php?page=gf_entries&id=' . $gfFormID . '">Entries</a>';
+		$output .= '<p><strong>Can be found on:</strong></p>';
 
-    	// close the paragraph
-    	$output .= '</p>';
-
-    	$output .= '<p><strong>This Gravity Form is in the following pages content:</strong></p>';
-
-    	// check each post and page for Gravity Forms shortcodes
+		// check each post and page for Gravity Forms shortcodes
 		foreach ($allPostIDs as $singlePostID) {
 
 			$postContent = get_post_field('post_content', $singlePostID, 'edit');
@@ -81,20 +84,24 @@ function list_pages_with_gravity_forms() {
 
 					if (strpos($match, $gfFormID) !== false) {
 
-    					// open the unordered list
-    					$output .= '<blockquote><ul>';
+						// open the unordered list
+						$output .= '<blockquote><ul>';
 
-    						$output .= '<li>';
+							$output .= '<li>';
 
-    							$output .= '<strong>Page Title:</strong> ' . get_the_title($singlePostID) . '&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<strong>Page ID:</strong> ' . $singlePostID . '<br/>';
-	
-								// post/page edit url
-    							$output .= '<a href="' . site_url() . '/wp-admin/post.php?post=' . $singlePostID . '&action=edit">Edit</a>&nbsp;|&nbsp;';
-
-    							// post/page edit url
-    							$output .= '<a href="' . get_the_permalink($singlePostID) . '">View</a>';
-
-    						$output .= '</li>';    						
+								$output .=
+									// post/page view url
+									'<a href="' . get_the_permalink($singlePostID) . '">View</a>' .
+									'&nbsp;|&nbsp;' .
+									// post/page edit url
+									'<a href="' . site_url() . '/wp-admin/post.php?post=' . $singlePostID . '&action=edit">Edit</a>' .
+									'&nbsp;|&nbsp;' .
+									// Title in bold
+									'<strong>' . get_the_title($singlePostID) . '</strong> ' .
+									// Post type name and ID
+									'(' . ucwords(get_post_type($singlePostID)) . ' ID: ' . $singlePostID . ')' .
+									// end of line
+									 '</li>';
 
 						// close the unordered list
 						$output .= '</ul></blockquote>';
@@ -107,7 +114,7 @@ function list_pages_with_gravity_forms() {
 
 		}
 
-		$output .= '<br/><hr/><br/>';
+		$output .= '<br/><hr/>';
 
 	}
 
