@@ -39,7 +39,7 @@ function list_pages_with_gravity_forms() {
 	//build the Where is GF? page output
 	foreach ($forms as $form) {
 
-		$gfFormID = (string)$form['fields']['0']['formId'];
+		$gfFormID = (string)$form['id'];
 
 		// open the paragraph
 		$output .= '<p style="font-size:16px;">';
